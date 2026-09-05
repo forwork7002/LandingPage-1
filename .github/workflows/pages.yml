@@ -20,11 +20,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Pages manbasini qatʼiy "GitHub Actions" ga oʻrnatadi.
+      # Aks holda repo "Deploy from a branch" rejimida qolsa, GitHub ning
+      # pages-build-deployment builderi ham parallel ishlaydi va ikkalasi
+      # bitta saytga yozadi — qaysi biri keyin tugasa oʻsha gʻolib boʻladi.
+      - name: Pages manbasini GitHub Actions ga oʻtkazish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X POST "repos/${{ github.repository }}/pages" \
+              -f build_type=workflow 2>/dev/null \
+            || gh api -X PUT "repos/${{ github.repository }}/pages" \
+              -f build_type=workflow
+          gh api "repos/${{ github.repository }}/pages" --jq '"manba: " + .build_type'
+
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       # Faqat statik sayt fayllari publish qilinadi.
       # server.js, start.sh, sinolife-landing.service — chiqarilmaydi.
