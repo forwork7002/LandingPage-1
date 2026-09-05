@@ -1,0 +1,11 @@
+# GitHub Pages "Deploy from a branch" rejimida saytni Jekyll yigʻadi.
+# Bu yerda sanab oʻtilganlar publish qilinmaydi — repoda qoladi, lekin
+# saytda ochilmaydi. Publish boʻladigan narsa: index.html va img/.
+exclude:
+  - server.js
+  - start.sh
+  - sinolife-landing.service
+  - public/
+  - README.md
+  - Gemfile
+  - Gemfile.lock
